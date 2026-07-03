@@ -10,8 +10,11 @@ class User extends Model{
                 admin: Sequelize.BOOLEAN,
             },
             {
-                sequelize
+                sequelize,
+                tableName: 'users',
             }
         )
     }
 }
+
+export default User;
