@@ -27,13 +27,13 @@ class UserController{
 
         const { name, email, password, admin} = request.body
 
-        const existintUser = await User.findOne({
+        const existingUser = await User.findOne({
             where: {
                email
             }
         })
 
-        if(existintUser){
+        if(existingUser){
             return response.status(400).json(
                {message : "Email already taken!"}
             )
