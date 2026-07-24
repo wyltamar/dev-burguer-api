@@ -4,8 +4,12 @@ import authConfig from './../config/auth.js'
 const authMiddleware = (request, response, next) => {
     
     const authToken = request.headers.autorization
+
+    console.log(authToken)
     
-    if(!authToken) response.status(401).json({Error: "Token not provided!"})
+    if(!authToken){
+        return response.status(401).json({Error: "Token not provided!"})
+    } 
 
     const token = authToken.split(' ')[1]
 
