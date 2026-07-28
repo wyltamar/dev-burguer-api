@@ -40,7 +40,7 @@ class SessionController{
            messageErro()
         }
 
-        const token = jwt.sign({id: existingUser.id, email: existingUser.email}, auth.secret,
+        const token = jwt.sign({id: existingUser.id, admin: existingUser.admin}, auth.secret,
             {
                 expiresIn: auth.expiresIn,
             },

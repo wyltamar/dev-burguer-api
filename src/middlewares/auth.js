@@ -1,11 +1,9 @@
-import jwt from 'jsonwebtoken'
+import jwt, { decode } from 'jsonwebtoken'
 import authConfig from './../config/auth.js'
 
 const authMiddleware = (request, response, next) => {
     
     const authToken = request.headers.autorization
-
-    console.log(authToken)
     
     if(!authToken){
         return response.status(401).json({Error: "Token not provided!"})
@@ -19,8 +17,9 @@ const authMiddleware = (request, response, next) => {
                 
                 throw Error()
             }
-
+            
             request.userId = decoded.id
+            request.userIsAdmin = decoded.admin
             
         })
     } catch (error) {
