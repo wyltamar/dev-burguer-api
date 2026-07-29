@@ -50,9 +50,7 @@ class ProductController{
 
         const {name, price, category_id, offer} = request.body
         const {id} = request.params
-
-        console.log(`request params id: ${id}`)
-        
+    
         let path
         if(request.file){
             const {filename} = request.file

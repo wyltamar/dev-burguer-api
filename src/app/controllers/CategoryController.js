@@ -6,6 +6,7 @@ class CategoryController{
 
         const schema = Yup.object({
             name: Yup.string().required(),
+            path: Yup.string(),
         })
 
         try {
@@ -14,7 +15,8 @@ class CategoryController{
          return response.status(400).json({error: err.errors})
        }
 
-       const {name} = request.body
+       const {name, path} = request.body
+       const {filename} = request.file
 
        const existingCategory = await Category.findOne({
             where: {
@@ -27,6 +29,7 @@ class CategoryController{
 
        const newCategory = await Category.create({
             name,
+            path: filename,
        })
 
 
