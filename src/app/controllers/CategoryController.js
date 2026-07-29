@@ -6,7 +6,6 @@ class CategoryController{
 
         const schema = Yup.object({
             name: Yup.string().required(),
-            path: Yup.string(),
         })
 
         try {
@@ -15,7 +14,7 @@ class CategoryController{
          return response.status(400).json({error: err.errors})
        }
 
-       const {name, path} = request.body
+       const {name} = request.body
        const {filename} = request.file
 
        const existingCategory = await Category.findOne({
@@ -43,13 +42,19 @@ class CategoryController{
         })
 
         try {
-            schema.validateSync(request.body, {abortEarly: false, strict: true})
+            schema.validateSync(request.body, {abortEarly: false,strict: true})
        } catch (err) {
          return response.status(400).json({error: err.errors})
        }
-
+       
        const {name} = request.body
        const {id} = request.params
+       
+       let path
+       if(request.file){
+           const {filename} = request.file 
+           path = filename
+       }
 
        const existingCategory = await Category.findOne({
             where: {
@@ -62,9 +67,11 @@ class CategoryController{
 
        const updateCategory = await Category.update({
             name,
-       },{
+            path,
+       },
+       {
             where:{
-                id
+                id,
             }
        })
 
