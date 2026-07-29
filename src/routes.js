@@ -20,6 +20,7 @@ routes.put('/products/:id', adminMiddleware, upload.single('file'), ProductContr
 routes.get('/products', ProductController.index)
 
 routes.post('/categories', adminMiddleware, CategoryController.store)
+routes.put('/categories/:id', adminMiddleware, CategoryController.update)
 routes.get('/categories', CategoryController.index)
 
 
