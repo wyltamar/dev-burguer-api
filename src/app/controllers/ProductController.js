@@ -57,7 +57,7 @@ class ProductController{
             path = filename
         }
 
-        const updateProduct = await Product.update({
+        await Product.update({
             name,
             price,
             category_id,
@@ -66,7 +66,7 @@ class ProductController{
        },
        {
             where: {
-                id
+                id,
             }
         })
         return response.status(200).json({Message: 'Record successfuly updated!'})
