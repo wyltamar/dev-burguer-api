@@ -20,6 +20,7 @@ const authMiddleware = (request, response, next) => {
             
             request.userId = decoded.id
             request.userIsAdmin = decoded.admin
+            request.userName = decoded.name
             
         })
     } catch (error) {
