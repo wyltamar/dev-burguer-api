@@ -4,7 +4,6 @@ import Category from "../models/Category.js"
 
 class OrderController{
     async store(request, response){
-
         
         const schema = Yump.object({
            products: Yump.array().of(Yump.object({
@@ -12,9 +11,7 @@ class OrderController{
                 quantity: Yump.number().required().min(1),
                 })).min(1,"The order must contain at least one product.")
                    .required("The products are mandatory."),
-            
-            status: Yump.string().required("The status is mandatory.") 
-        })
+        }) 
 
         try {
             schema.validateSync(request.body, {abortEarly: false, strict: true})
@@ -42,7 +39,7 @@ class OrderController{
 
         const mapedProducts = findedProducts.map(product => {
 
-            const quantity = products.findAll(p => p.id === product.id).quantity
+            const quantity = products.find(p => p.id === product.id).quantity
 
             const newProduct = {
                 id: product.id,
@@ -50,8 +47,9 @@ class OrderController{
                 price: product.price,
                 url: product.url,
                 category: product.category.name,
-                quantity: quantity
+                quantity,
             }
+            
             return newProduct
         })
 
