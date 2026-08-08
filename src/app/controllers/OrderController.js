@@ -1,5 +1,6 @@
 import * as Yump from "yup"
 import Product from "../models/Product.js"
+import Category from "../models/Category.js"
 
 class OrderController{
     async store(request, response){
@@ -31,7 +32,27 @@ class OrderController{
            where: {
                id: productsId
             },
+            include: {
+                model: Category,
+                as: 'category',
+                attributes: ['name'],
+            }
 
+        })
+
+        const mapedProducts = findedProducts.map(product => {
+
+            const quantity = products.findAll(p => p.id === product.id).quantity
+
+            const newProduct = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                url: product.url,
+                category: product.category.name,
+                quantity: quantity
+            }
+            return newProduct
         })
 
        const order = {
@@ -39,7 +60,8 @@ class OrderController{
                 id: userId,
                 name: userName,
             },
-            products: findedProducts,
+            products: mapedProducts,
+            status: "Pedido Realizado"
        }
 
         return response.status(201).json(order)
